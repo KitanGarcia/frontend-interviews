@@ -7,11 +7,20 @@ interface BoardProps {
   setBoardState: Dispatch<SetStateAction<Array<string>>>;
   isXTurn: boolean;
   setIsXTurn: Dispatch<SetStateAction<boolean>>;
+  winner: string;
+  checkWinner: (board: string[]) => void;
 }
 
-function Board({ boardState, setBoardState, isXTurn, setIsXTurn }: BoardProps) {
+function Board({
+  boardState,
+  setBoardState,
+  isXTurn,
+  setIsXTurn,
+  winner,
+  checkWinner,
+}: BoardProps) {
   const handleMove = (index: number) => {
-    if (boardState[index]) {
+    if (boardState[index] || winner) {
       return;
     }
 
@@ -19,6 +28,8 @@ function Board({ boardState, setBoardState, isXTurn, setIsXTurn }: BoardProps) {
     const value = isXTurn ? "X" : "O";
     const boardCopy = [...boardState];
     boardCopy[index] = value;
+
+    checkWinner(boardCopy);
 
     // Set state
     setBoardState(boardCopy);
@@ -32,19 +43,22 @@ function Board({ boardState, setBoardState, isXTurn, setIsXTurn }: BoardProps) {
       {boardState &&
         boardState.map((_, index) =>
           index % 3 === 2 ? (
-            <div className="row">
+            <div key={`row${index}`} className="row">
               <Cell
                 value={boardState[index - 2]}
+                key={index - 2}
                 index={index - 2}
                 handleMove={handleMove}
               />
               <Cell
                 value={boardState[index - 1]}
+                key={index - 1}
                 index={index - 1}
                 handleMove={handleMove}
               />
               <Cell
                 value={boardState[index]}
+                key={index}
                 index={index}
                 handleMove={handleMove}
               />
