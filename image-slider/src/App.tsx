@@ -1,14 +1,12 @@
 import "./App.css";
-import image from "./assets/placeholder.png";
-import logo from "./assets/logo.svg";
+import ButtonSlider from "./components/ButtonSlider";
+import ScrollbarSlider from "./components/ScrollbarSlider";
 
 function App() {
-  const images = [image, image, image, image, image];
   return (
     <div className="App">
-      {images.map((source) => (
-        <img src={source} />
-      ))}
+      <ScrollbarSlider />
+      <ButtonSlider />
     </div>
   );
 }

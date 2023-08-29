@@ -1,20 +1,53 @@
-html, body, #root {
+html, body, #root, .App {
   height: 100%;
 }
 
-.App {
+.ScrollbarSlider {
   text-align: center;
   width: 100%;
   height: 300px;
   position: relative;
   margin: auto;
   background-color: darkseagreen;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 5%;
+  transform: translateY(-5%);
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
 }
+
+.ButtonSlider {
+  text-align: center;
+  width: 100%;
+  height: 300px;
+  position: relative;
+  margin: auto;
+  background-color: bisque;
+  top: 15%;
+  transform: translateY(-15%);
+  display: flex;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.buttonDiv {
+  position: relative;
+  text-align: center;
+  top: 12%;
+}
+
+.buttonDiv button {
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 30px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 10px;
+  border: none;
+  background-color: bisque;
+  font-weight: bold;
+}
+
 
 img {
   height: 250px;
