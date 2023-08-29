@@ -9,7 +9,7 @@ function Checkbox({ data }: CheckboxProps) {
   return (
     <>
       <li>
-        <input type="checkbox" />
+        <input type="checkbox" checked={data.checked} />
         <label>{data.label}</label>
       </li>
       {data.childrenNodes && (
