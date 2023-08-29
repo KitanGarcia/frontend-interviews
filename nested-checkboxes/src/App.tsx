@@ -53,19 +53,24 @@ function App() {
     },
   ]);
 
-  const findParent = (
+  // Returns a node given its checkbox label/name
+  const findNode = (
     checkboxesAtLevel: Node[],
-    parentName: string
+    nodeName: string | undefined
   ): Node | undefined => {
+    if (nodeName === undefined) {
+      return undefined;
+    }
+
     for (let node of checkboxesAtLevel) {
       // Node found
       console.log(node.label);
-      if (node.label === parentName) {
+      if (node.label === nodeName) {
         return node;
       }
 
       // Search children recursively
-      const foundInChild = findParent(node.childrenNodes, parentName);
+      const foundInChild = findNode(node.childrenNodes, nodeName);
       if (foundInChild) {
         return foundInChild; // Return the result of the recursive call
       }
@@ -75,19 +80,48 @@ function App() {
     return undefined;
   };
 
-  console.log(findParent(checkboxes, "greetings"));
+  // Checks all descendents of a node
+  const operateOnDescendents = (node: Node, check: boolean) => {
+    for (let child of node.childrenNodes) {
+      child.checked = check;
+      operateOnDescendents(child, check);
+    }
+  };
 
-  const handleChange = () => {
+  console.log(findNode(checkboxes, "greetings"));
+
+  const handleChange = (event: any, node: Node) => {
+    const nodeCopy = { ...node };
+
+    // Find parent
+    const parentCopy = { ...findNode(checkboxes, node.parent) };
+
     // If checked
-    //   check all children
-    //   find parent.
-    //   verify if parent's children are checked
-    //     if so, check parent
-    //       repeat recursively
+    // THIS NEEDS TO BE FIXED!!! SHOULD CAPTURE THE NODE AND IF WAS CHECKED OR UNCHECKED
+    if (event.target.value === "check") {
+      // Set node to checked
+      nodeCopy.checked = true;
+
+      // Check all children
+      operateOnDescendents(nodeCopy, true);
+
+      //   verify if parent's children are checked
+      //     if so, check parent
+      //       repeat recursively
+    }
+
     // If unchecked
-    //   find parent
-    //     uncheck parent
-    //     repeat recursively
+    else {
+      // Uncheck parent
+      if (parentCopy) {
+        parentCopy.checked = false;
+      }
+
+      // Uncheck all children
+      operateOnDescendents(nodeCopy, false);
+    }
+
+    // Set state
   };
 
   return (
